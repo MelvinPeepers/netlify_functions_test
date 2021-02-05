@@ -10,6 +10,21 @@ const App = () => {
 
   const handleSubmit = async event => {
     event.preventDefault();
+
+    if (name && email) {
+      const encodedName = encodeURIComponent(name);
+      const encodedEmail = encodeURIComponent(email);
+
+      const sentEmail = await (
+        await fetch(
+          `/.netlify/functions/sendEmail?userName=${encodedName}&userEmail=${encodedEmail}`
+        )
+      ).json();
+
+      setIsSent(true);
+
+      console.log(sentEmail);
+    }
   };
 
   return (
